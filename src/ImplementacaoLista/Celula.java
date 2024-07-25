@@ -2,10 +2,10 @@ package ImplementacaoLista;
 
 public class Celula {
 
-    int valor;
+    Tweet valor;
     Celula prox;
 
-    public Celula(int dado) {
+    public Celula(Tweet dado) {
         valor = dado;
     }
 

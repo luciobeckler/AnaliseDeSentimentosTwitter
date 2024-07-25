@@ -9,6 +9,9 @@ public class Main {
 
         ListaSe listaAlbano = leitorDeArquivos.LeArquivosECriaObjetos("src/Data/Albanian_Twitter_sentiment.csv");
         ListaSe listaAlemao = leitorDeArquivos.LeArquivosECriaObjetos("src/Data/German_Twitter_sentiment.csv");
+        // Escrever todas as listas
 
+        ListaSe listaCompleta = ListaSe.juntarListas(listaAlbano, listaAlemao);
+        listaCompleta.imprimir();
     }
 }
