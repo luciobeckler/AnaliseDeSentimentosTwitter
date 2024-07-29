@@ -24,6 +24,7 @@ public class LeitorDeArquivos {
     } catch (Exception e) {
       System.err.println(e);
     }
+    // ListaTweets.imprimir();
     return ListaTweets;
   }
 

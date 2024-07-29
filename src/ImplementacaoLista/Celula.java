@@ -2,11 +2,16 @@ package ImplementacaoLista;
 
 public class Celula {
 
-    Tweet valor;
+    ListaSe lista;
+    Tweet tweetItem;
     Celula prox;
 
     public Celula(Tweet dado) {
-        valor = dado;
+        tweetItem = dado;
+    }
+
+    public Celula(ListaSe dado) {
+        lista = dado;
     }
 
 }

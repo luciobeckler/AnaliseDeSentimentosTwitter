@@ -105,23 +105,4 @@ public class ListaSe {
             aux = aux.prox;
         }
     }
-
-    public static ListaSe juntarListas(ListaSe lista1, ListaSe lista2) {
-
-        ListaSe listaNova = new ListaSe();
-        Celula aux = lista1.primeiro;
-        Celula aux2 = lista2.primeiro;
-
-        while (aux != null) {
-            listaNova.inserirNoFinal(aux);
-            aux = aux.prox;
-        }
-
-        while (aux2 != null) {
-            listaNova.inserirNoFinal(aux2);
-            aux2 = aux2.prox;
-        }
-
-        return listaNova;
-    }
 }
