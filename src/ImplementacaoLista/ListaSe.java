@@ -13,8 +13,24 @@ public class ListaSe {
     }
 
     public void inserirNoInicio(Celula celula) {
-        celula.prox = primeiro;
-        primeiro = celula;
+        if (vazio())
+            primeiro = celula;
+        else {
+            celula.prox = primeiro;
+            primeiro = celula;
+        }
+    }
+
+    public void inserirNoInicio(ListaSe lista) {
+        if (vazio())
+            primeiro = new Celula(lista);
+        else {
+            Celula aux = primeiro;
+            while (aux.prox != null) {
+                aux = aux.prox;
+            }
+            aux.prox = new Celula(lista);
+        }
     }
 
     public void inserirNoMeio(int posicao, Celula celula) {
@@ -101,8 +117,35 @@ public class ListaSe {
     public void imprimir() {
         Celula aux = primeiro;
         while (aux != null) {
-            System.out.println("Valor:" + aux.valor);
+            System.out.println(aux.tweetItem);
             aux = aux.prox;
         }
+    }
+
+    public long tamanho() {
+        Celula aux = primeiro;
+        long cont = 0;
+        while (aux != null) {
+            cont++;
+            aux = aux.prox;
+        }
+        return cont;
+    }
+
+    public Celula getCelula(int posicao) {
+        Celula aux = primeiro;
+        int cont = 0;
+        while (aux != null) {
+            if (cont == posicao) {
+                return aux;
+            }
+            aux = aux.prox;
+            cont++;
+        }
+        return null;
+    }
+
+    public Celula getPrimeiro() {
+        return primeiro;
     }
 }

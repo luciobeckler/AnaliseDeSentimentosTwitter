@@ -25,4 +25,8 @@ public class Tweet {
     public String getAnnotatorID() {
         return AnnotatorID;
     }
+
+    public String getLingua() {
+        return Lingua;
+    }
 }

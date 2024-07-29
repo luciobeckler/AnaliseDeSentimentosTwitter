@@ -14,4 +14,12 @@ public class Celula {
         lista = dado;
     }
 
+    public ListaSe getCelulaLista() {
+        return lista;
+    }
+
+    public Tweet getCelulaTweet() {
+        return tweetItem;
+    }
+
 }
