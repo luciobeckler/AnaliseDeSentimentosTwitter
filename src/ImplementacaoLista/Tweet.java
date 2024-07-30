@@ -3,7 +3,7 @@ package ImplementacaoLista;
 public class Tweet {
 
     private Long TweetId;
-    private String HandLabel;
+    private String HandLabel; // Positive, Negative ou Neutral
     private String AnnotatorID;
     private String Lingua;
 

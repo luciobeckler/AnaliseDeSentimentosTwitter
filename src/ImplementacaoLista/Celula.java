@@ -4,6 +4,7 @@ public class Celula {
 
     ListaSe lista;
     Tweet tweetItem;
+    AnaliseLingua numeroLingua;
     Celula prox;
 
     public Celula(Tweet dado) {
@@ -14,12 +15,20 @@ public class Celula {
         lista = dado;
     }
 
+    public Celula(AnaliseLingua dado) {
+        numeroLingua = dado;
+    }
+
     public ListaSe getCelulaLista() {
         return lista;
     }
 
     public Tweet getCelulaTweet() {
         return tweetItem;
+    }
+
+    public AnaliseLingua getCelulaPositivosNegativosLingua() {
+        return numeroLingua;
     }
 
 }

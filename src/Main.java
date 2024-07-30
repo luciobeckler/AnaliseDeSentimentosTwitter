@@ -56,5 +56,8 @@ public class Main {
                 RespondePerguntasTp respondePerguntasTp = new RespondePerguntasTp(listaDeLinguagens);
 
                 respondePerguntasTp.respondePergunta1();
+                // respondePerguntasTp.respondePergunta2(); Código gerando demora para rodar
+                // respondePerguntasTp.respondePergunta3();
+                respondePerguntasTp.respondePergunta4();
         }
 }
