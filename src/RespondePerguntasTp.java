@@ -26,6 +26,7 @@ public class RespondePerguntasTp {
     System.out.println("Qual o volume total de tweets positivos? E qual o volume total de tweets negativos?");
     int totalPositivos = 0;
     int totalNegativos = 0;
+
     for (int i = 0; i < listaDeLinguagens.tamanho(); i++) {
       for (int j = 0; j < listaDeLinguagens.getCelula(i).getCelulaLista().tamanho(); j++) {
         if (listaDeLinguagens.getCelula(i).getCelulaLista().getCelula(j).getCelulaTweet().getHandLabel()
@@ -46,17 +47,18 @@ public class RespondePerguntasTp {
         "Qual o idioma com mais tweets negativos? Qual o idioma com mais tweets positivos? É possível fazer um ranking dos idiomas?");
 
     ListaSe analiseLingua = new ListaSe();
-
-    for (int i = 0; i < listaDeLinguagens.tamanho(); i++) {
+    long tamanhoLinguagens = listaDeLinguagens.tamanho();
+    for (int i = 0; i < tamanhoLinguagens; i++) {
       ListaSe linguagemSelecionada = listaDeLinguagens.getCelula(i).getCelulaLista();
+      long tamanhoLinguagemSelecionada = linguagemSelecionada.tamanho();
 
       long totalNegativos = 0;
       long totalPositivos = 0;
       long totalNeutros = 0;
       String lingua = "";
 
-      for (long j = 0; j < linguagemSelecionada.tamanho(); j++) {
-        Tweet celulaSelecionada = linguagemSelecionada.getCelula(i).getCelulaTweet();
+      for (int j = 0; j < tamanhoLinguagemSelecionada; j++) {
+        Tweet celulaSelecionada = linguagemSelecionada.getCelula(j).getCelulaTweet();
         lingua = celulaSelecionada.getLingua();
         if (celulaSelecionada.getHandLabel().equals("Negative"))
           totalNegativos++;
@@ -65,13 +67,14 @@ public class RespondePerguntasTp {
         else
           totalNeutros++;
       }
-
       analiseLingua.inserirNoFinal(new Celula(new AnaliseLingua(totalNegativos, totalPositivos, totalNeutros, lingua)));
 
-      AnaliseLingua linguaMaisNegativa = new AnaliseLingua(0, 0, 0, "");
-      AnaliseLingua linguaMaisPositiva = new AnaliseLingua(0, 0, 0, "");
+      AnaliseLingua linguaMaisNegativa = new AnaliseLingua(totalNegativos, totalPositivos, totalNeutros, lingua);
+      AnaliseLingua linguaMaisPositiva = new AnaliseLingua(totalNegativos, totalPositivos, totalNeutros, lingua);
 
-      for (int k = 0; k < analiseLingua.tamanho(); i++) {
+      long tamanhoAnaliseLingua = analiseLingua.tamanho();
+
+      for (int k = 0; k < tamanhoAnaliseLingua; k++) {
         if (analiseLingua.getCelula(k).getCelulaPositivosNegativosLingua().getNumeroDeNegativos() > linguaMaisNegativa
             .getNumeroDeNegativos())
           linguaMaisNegativa = analiseLingua.getCelula(k).getCelulaPositivosNegativosLingua();
@@ -85,6 +88,8 @@ public class RespondePerguntasTp {
           .println("A lingua com o maior número de tweets positivos é: " + linguaMaisPositiva.getNumeroDePositivos());
       System.err
           .println("A lingua com o maior número de tweets negativos é: " + linguaMaisPositiva.getNumeroDeNegativos());
+      System.err
+          .println("A lingua com o maior número de tweets negativos é: " + linguaMaisPositiva.getLingua());
 
     }
   }
