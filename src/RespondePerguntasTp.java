@@ -1,8 +1,7 @@
-import ImplementacaoLista.AnaliseLingua;
-import ImplementacaoLista.Celula;
-import ImplementacaoLista.ListaSe;
-import ImplementacaoLista.AnaliseLingua;
-import ImplementacaoLista.Tweet;
+import ImplementacaoListaSE.AnaliseLingua;
+import ImplementacaoListaSE.CelulaSE;
+import ImplementacaoListaSE.ListaSe;
+import ImplementacaoListaSE.Tweet;
 
 public class RespondePerguntasTp {
 
@@ -24,8 +23,10 @@ public class RespondePerguntasTp {
 
   public void respondePergunta2() {
     System.out.println("Qual o volume total de tweets positivos? E qual o volume total de tweets negativos?");
-    int totalPositivos = 0;
-    int totalNegativos = 0;
+
+    long totalPositivos = (long) 0;
+    long totalNegativos = (long) 0;
+
     for (int i = 0; i < listaDeLinguagens.tamanho(); i++) {
       for (int j = 0; j < listaDeLinguagens.getCelula(i).getCelulaLista().tamanho(); j++) {
         if (listaDeLinguagens.getCelula(i).getCelulaLista().getCelula(j).getCelulaTweet().getHandLabel()
@@ -66,12 +67,13 @@ public class RespondePerguntasTp {
           totalNeutros++;
       }
 
-      analiseLingua.inserirNoFinal(new Celula(new AnaliseLingua(totalNegativos, totalPositivos, totalNeutros, lingua)));
+      analiseLingua
+          .inserirNoFinal(new CelulaSE(new AnaliseLingua(totalNegativos, totalPositivos, totalNeutros, lingua)));
 
       AnaliseLingua linguaMaisNegativa = new AnaliseLingua(0, 0, 0, "");
       AnaliseLingua linguaMaisPositiva = new AnaliseLingua(0, 0, 0, "");
 
-      for (int k = 0; k < analiseLingua.tamanho(); i++) {
+      for (int k = 0; k < analiseLingua.tamanho(); k++) {
         if (analiseLingua.getCelula(k).getCelulaPositivosNegativosLingua().getNumeroDeNegativos() > linguaMaisNegativa
             .getNumeroDeNegativos())
           linguaMaisNegativa = analiseLingua.getCelula(k).getCelulaPositivosNegativosLingua();
@@ -96,7 +98,7 @@ public class RespondePerguntasTp {
       for (int j = 0; j < listaDeLinguagens.getCelula(i).getCelulaLista().tamanho(); j++) {
         Tweet tweet = listaDeLinguagens.getCelula(i).getCelulaLista().getCelula(j).getCelulaTweet();
         if (tweeters.tamanho() == 0) {
-          tweeters.inserirNoFinal(new Celula(tweet));
+          tweeters.inserirNoFinal(new CelulaSE(tweet));
         } else {
           boolean tweeterJaRegistrado = false;
           for (int k = 0; k < tweeters.tamanho(); k++) {
@@ -107,7 +109,7 @@ public class RespondePerguntasTp {
             }
           }
           if (!tweeterJaRegistrado) {
-            tweeters.inserirNoFinal(new Celula(tweet));
+            tweeters.inserirNoFinal(new CelulaSE(tweet));
           }
         }
       }

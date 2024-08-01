@@ -1,4 +1,4 @@
-import ImplementacaoLista.ListaSe;
+import ImplementacaoListaSE.ListaSe;
 
 public class Linguagens {
   private String Lingua;

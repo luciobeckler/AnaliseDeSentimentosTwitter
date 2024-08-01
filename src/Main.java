@@ -1,4 +1,4 @@
-import ImplementacaoLista.ListaSe;
+import ImplementacaoListaSE.ListaSe;
 
 public class Main {
         public static void main(String[] args) {
@@ -56,8 +56,8 @@ public class Main {
                 RespondePerguntasTp respondePerguntasTp = new RespondePerguntasTp(listaDeLinguagens);
 
                 respondePerguntasTp.respondePergunta1();
-                // respondePerguntasTp.respondePergunta2(); Código gerando demora para rodar
-                // respondePerguntasTp.respondePergunta3();
+                respondePerguntasTp.respondePergunta2();
+                respondePerguntasTp.respondePergunta3();
                 respondePerguntasTp.respondePergunta4();
         }
 }
