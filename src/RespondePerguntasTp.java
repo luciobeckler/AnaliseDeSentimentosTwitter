@@ -1,6 +1,9 @@
+import java.nio.channels.Pipe.SourceChannel;
+
 import ImplementacaoLista.AnaliseLingua;
 import ImplementacaoLista.Celula;
 import ImplementacaoLista.ListaSe;
+import ImplementacaoLista.ResultadoAnalise;
 import ImplementacaoLista.AnaliseLingua;
 import ImplementacaoLista.Tweet;
 
@@ -46,7 +49,7 @@ public class RespondePerguntasTp {
     System.out.println(
         "Qual o idioma com mais tweets negativos? Qual o idioma com mais tweets positivos? É possível fazer um ranking dos idiomas?");
 
-    ListaSe analiseLingua = new ListaSe();
+    ResultadoAnalise resultadoAnalise = new ResultadoAnalise();
     long tamanhoLinguagens = listaDeLinguagens.tamanho();
     for (int i = 0; i < tamanhoLinguagens; i++) {
       ListaSe linguagemSelecionada = listaDeLinguagens.getCelula(i).getCelulaLista();
@@ -67,59 +70,147 @@ public class RespondePerguntasTp {
         else
           totalNeutros++;
       }
-      analiseLingua.inserirNoFinal(new Celula(new AnaliseLingua(totalNegativos, totalPositivos, totalNeutros, lingua)));
+      AnaliseLingua analise = new AnaliseLingua(totalNegativos, totalPositivos, totalNeutros, lingua);
+      resultadoAnalise.inserirNoInicio(analise);
+      System.out.println("processado");
+    }
 
-      AnaliseLingua linguaMaisNegativa = new AnaliseLingua(totalNegativos, totalPositivos, totalNeutros, lingua);
-      AnaliseLingua linguaMaisPositiva = new AnaliseLingua(totalNegativos, totalPositivos, totalNeutros, lingua);
+    ResultadoAnalise analiseTemporaria = new ResultadoAnalise(resultadoAnalise);
+    ResultadoAnalise analiseTemporaria2 = new ResultadoAnalise(resultadoAnalise);
 
-      long tamanhoAnaliseLingua = analiseLingua.tamanho();
+    ResultadoAnalise analiseOrdenadaNegativos = new ResultadoAnalise();
+    ResultadoAnalise analiseOrdenadaPositivos = new ResultadoAnalise();
+   
+    while (analiseTemporaria.tamanho() != 0) {
+      long maiorNegativo = 0;
+      int posicao = 0;
 
-      for (int k = 0; k < tamanhoAnaliseLingua; k++) {
-        if (analiseLingua.getCelula(k).getCelulaPositivosNegativosLingua().getNumeroDeNegativos() > linguaMaisNegativa
-            .getNumeroDeNegativos())
-          linguaMaisNegativa = analiseLingua.getCelula(k).getCelulaPositivosNegativosLingua();
+      AnaliseLingua analiseNegativa = null;
 
-        if (analiseLingua.getCelula(k).getCelulaPositivosNegativosLingua().getNumeroDePositivos() > linguaMaisNegativa
-            .getNumeroDePositivos())
-          linguaMaisNegativa = analiseLingua.getCelula(k).getCelulaPositivosNegativosLingua();
+      for (int indexAnalise = 0; indexAnalise < analiseTemporaria.tamanho(); indexAnalise++) {
+        AnaliseLingua lang = analiseTemporaria.get(indexAnalise);
+        long negativo = lang.getNumeroDeNegativos();
+
+        if (maiorNegativo < negativo) {
+
+          maiorNegativo = negativo;
+          posicao = indexAnalise;
+          analiseNegativa = lang;
+        }
       }
 
-      System.err
-          .println("A lingua com o maior número de tweets positivos é: " + linguaMaisPositiva.getNumeroDePositivos());
-      System.err
-          .println("A lingua com o maior número de tweets negativos é: " + linguaMaisPositiva.getNumeroDeNegativos());
-      System.err
-          .println("A lingua com o maior número de tweets negativos é: " + linguaMaisPositiva.getLingua());
+      AnaliseLingua analise = new AnaliseLingua(analiseNegativa.getNumeroDeNegativos(),
+          analiseNegativa.getNumeroDePositivos(),
+          analiseNegativa.getNumeroDeNeutros(), analiseNegativa.getLingua());
+      analiseOrdenadaNegativos.inserirNoInicio(analise);
+
+      analiseTemporaria.removerNoMeio(posicao);
 
     }
+
+    while (analiseTemporaria2.tamanho() != 0) {
+      long maiorPositivo = 0;
+      int posicao = 0;
+
+      AnaliseLingua analisePositiva = null;
+
+      for (int indexAnalise = 0; indexAnalise < analiseTemporaria2.tamanho(); indexAnalise++) {
+        AnaliseLingua lang = analiseTemporaria2.get(indexAnalise);
+        long positivo = lang.getNumeroDePositivos();
+
+        if (maiorPositivo < positivo) {
+          maiorPositivo = positivo;
+          posicao = indexAnalise;
+          analisePositiva = lang;
+        }
+      }
+      AnaliseLingua analise = new AnaliseLingua(analisePositiva.getNumeroDeNegativos(),
+          analisePositiva.getNumeroDePositivos(),
+          analisePositiva.getNumeroDeNeutros(), analisePositiva.getLingua());
+      analiseOrdenadaPositivos.inserirNoInicio(analise);
+
+      analiseTemporaria2.removerNoMeio(posicao);
+
+    }
+
+    System.out.println("O idioma com mais tweets negativos: " + analiseOrdenadaNegativos.get(0).getLingua());
+    System.out.println("O idioma com mais tweets positivos: " + analiseOrdenadaPositivos.get(0).getLingua());
+
+    System.out.println("RANK POSITIVOS");
+    for (int i = 0; i < analiseOrdenadaPositivos.tamanho(); i++) {
+      AnaliseLingua analisePositiva = analiseOrdenadaPositivos.get(i);
+
+      System.out.println(analisePositiva.getLingua() + " " + (i + 1) + " lugar" + " positivos: "
+          + analisePositiva.getNumeroDePositivos());
+    }
+
+    System.out.println("RANK NEGATIVOS");
+    for (int i = 0; i < analiseOrdenadaNegativos.tamanho(); i++) {
+      AnaliseLingua analiseNegativa = analiseOrdenadaNegativos.get(i);
+
+      System.out.println(analiseNegativa.getLingua() + " " + (i + 1) + " lugar" + " negativos: "
+          + analiseNegativa.getNumeroDeNegativos());
+    }
+
   }
 
   public void respondePergunta4() {
     System.out.println("Algum tweeter teve registro em mais de um idioma? Qual, quais e/ou quantos?");
     ListaSe tweeters = new ListaSe();
+    ListaSe tweetersBilingue = new ListaSe();
+
+    // econtra os tweeters unicos tanto em id quanto em lingua
     for (int i = 0; i < listaDeLinguagens.tamanho(); i++) {
-      for (int j = 0; j < listaDeLinguagens.getCelula(i).getCelulaLista().tamanho(); j++) {
-        Tweet tweet = listaDeLinguagens.getCelula(i).getCelulaLista().getCelula(j).getCelulaTweet();
+      ListaSe linguagemSelecionada = listaDeLinguagens.getCelula(i).getCelulaLista();
+      for (int j = 0; j < linguagemSelecionada.tamanho(); j++) {
+        Tweet tweet = linguagemSelecionada.getCelula(j).getCelulaTweet();
+
         if (tweeters.tamanho() == 0) {
           tweeters.inserirNoFinal(new Celula(tweet));
         } else {
           boolean tweeterJaRegistrado = false;
           for (int k = 0; k < tweeters.tamanho(); k++) {
             Tweet tweeter = tweeters.getCelula(k).getCelulaTweet();
-            if (tweeter.getAnnotatorID().equals(tweet.getAnnotatorID())) {
+
+            if (tweeter.getAnnotatorID().equals(tweet.getAnnotatorID())
+                && tweeter.getLingua().equals(tweet.getLingua())) {
               tweeterJaRegistrado = true;
+
               break;
             }
+            // caso tenha o mesmo id porem a lingua seja diferente adiciona o registro
+            if (tweeter.getAnnotatorID().equals(tweet.getAnnotatorID())
+                && !tweeter.getLingua().equals(tweet.getLingua())) {
+              if (tweetersBilingue.tamanho() == 0) {
+                tweetersBilingue.inserirNoFinal(new Celula(tweet));
+              } else {
+                tweetersBilingue.inserirNoInicio(new Celula(tweet));
+              }
+            }
           }
+
           if (!tweeterJaRegistrado) {
-            tweeters.inserirNoFinal(new Celula(tweet));
+            tweeters.inserirNoInicio(new Celula(tweet));
           }
         }
+
+       
       }
+      System.out.println("processado");
     }
+
+    System.out.println("Tweeters unicos para validacao: ");
     for (int i = 0; i < tweeters.tamanho(); i++) {
-      System.out.println("Tweeter: " + tweeters.getCelula(i).getCelulaTweet().getAnnotatorID());
+      System.out.println("Tweeter: " + tweeters.getCelula(i).getCelulaTweet().getAnnotatorID() + "lang: "
+          + tweeters.getCelula(i).getCelulaTweet().getLingua());
     }
+
+    System.out.println("Tweeters Bilingue: ");
+    for (int i = 0; i < tweetersBilingue.tamanho(); i++) {
+      System.out.println("Tweeter: " + tweeters.getCelula(i).getCelulaTweet().getAnnotatorID() + "lang :"
+          + tweeters.getCelula(i).getCelulaTweet().getLingua());
+    }
+
   }
 
 }
