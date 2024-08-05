@@ -1,4 +1,4 @@
-package ImplementacaoLista;
+package ImplementacaoListaSE;
 
 public class ResultadoAnalise {
 
@@ -15,9 +15,9 @@ public class ResultadoAnalise {
             AnaliseLingua aux = analise.primeiro.prox;
 
             while (aux != null) {
-                AnaliseLingua novo = new AnaliseLingua(aux); 
-                atual.prox = novo; 
-                atual = novo; 
+                AnaliseLingua novo = new AnaliseLingua(aux);
+                atual.prox = novo;
+                atual = novo;
                 aux = aux.prox;
             }
         }

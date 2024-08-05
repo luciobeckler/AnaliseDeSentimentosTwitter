@@ -1,11 +1,11 @@
 import java.nio.channels.Pipe.SourceChannel;
 
-import ImplementacaoLista.AnaliseLingua;
-import ImplementacaoLista.Celula;
-import ImplementacaoLista.ListaSe;
-import ImplementacaoLista.ResultadoAnalise;
-import ImplementacaoLista.AnaliseLingua;
-import ImplementacaoLista.Tweet;
+import ImplementacaoListaSE.AnaliseLingua;
+import ImplementacaoListaSE.CelulaSE;
+import ImplementacaoListaSE.ListaSe;
+import ImplementacaoListaSE.ResultadoAnalise;
+import ImplementacaoListaSE.AnaliseLingua;
+import ImplementacaoListaSE.Tweet;
 
 public class RespondePerguntasTp {
 
@@ -80,7 +80,7 @@ public class RespondePerguntasTp {
 
     ResultadoAnalise analiseOrdenadaNegativos = new ResultadoAnalise();
     ResultadoAnalise analiseOrdenadaPositivos = new ResultadoAnalise();
-   
+
     while (analiseTemporaria.tamanho() != 0) {
       long maiorNegativo = 0;
       int posicao = 0;
@@ -166,7 +166,7 @@ public class RespondePerguntasTp {
         Tweet tweet = linguagemSelecionada.getCelula(j).getCelulaTweet();
 
         if (tweeters.tamanho() == 0) {
-          tweeters.inserirNoFinal(new Celula(tweet));
+          tweeters.inserirNoFinal(new CelulaSE(tweet));
         } else {
           boolean tweeterJaRegistrado = false;
           for (int k = 0; k < tweeters.tamanho(); k++) {
@@ -182,19 +182,18 @@ public class RespondePerguntasTp {
             if (tweeter.getAnnotatorID().equals(tweet.getAnnotatorID())
                 && !tweeter.getLingua().equals(tweet.getLingua())) {
               if (tweetersBilingue.tamanho() == 0) {
-                tweetersBilingue.inserirNoFinal(new Celula(tweet));
+                tweetersBilingue.inserirNoFinal(new CelulaSE(tweet));
               } else {
-                tweetersBilingue.inserirNoInicio(new Celula(tweet));
+                tweetersBilingue.inserirNoInicio(new CelulaSE(tweet));
               }
             }
           }
 
           if (!tweeterJaRegistrado) {
-            tweeters.inserirNoInicio(new Celula(tweet));
+            tweeters.inserirNoInicio(new CelulaSE(tweet));
           }
         }
 
-       
       }
       System.out.println("processado");
     }
