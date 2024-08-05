@@ -5,6 +5,15 @@ public class AnaliseLingua {
   long numeroDePositivos;
   long numeroDeNeutros;
   String lingua;
+  AnaliseLingua prox;
+
+  public AnaliseLingua(AnaliseLingua original) {
+    this.numeroDeNegativos = original.numeroDeNegativos;
+    this.numeroDePositivos = original.numeroDePositivos;
+    this.numeroDeNeutros = original.numeroDeNeutros;
+    this.lingua = original.lingua;
+    this.prox = (original.prox != null) ? new AnaliseLingua(original.prox) : null;
+  }
 
   public AnaliseLingua(long numeroNegativos, long numeroPositivos, long numeroNeutros, String lingua) {
     this.numeroDeNegativos = numeroNegativos;
@@ -30,15 +39,15 @@ public class AnaliseLingua {
   }
 
   public long getNumeroDeNegativos() {
-    return numeroDeNegativos;
+    return this.numeroDeNegativos;
   }
 
   public long getNumeroDePositivos() {
-    return numeroDePositivos;
+    return this.numeroDePositivos;
   }
 
   public long getNumeroDeNeutros() {
-    return numeroDeNeutros;
+    return this.numeroDeNeutros;
   }
 
   public String getLingua() {

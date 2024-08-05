@@ -57,6 +57,7 @@ public class Main {
 
                 respondePerguntasTp.respondePergunta1();
                 respondePerguntasTp.respondePergunta2();
+                // Código com complexidade muito alta pode levar um bom tempo para terminar
                 respondePerguntasTp.respondePergunta3();
                 respondePerguntasTp.respondePergunta4();
         }
